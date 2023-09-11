@@ -3,11 +3,11 @@
 
 int main(int ac, char **argv)
 {
-	char *store = NULL, *_getline = *argv;
+	char *store = NULL, *_getline = *argv, *token;
 	size_t size = 0;
 	ssize_t r_val;
 	pid_t pid;
-	int running = 1, exeRV, wait_status;
+	int running = 1, exeRV, wait_status, i = 0;
 
 	while(running)
 	{
@@ -35,9 +35,18 @@ int main(int ac, char **argv)
 		{
 			// look at execvp which solves this
 			char *args[] = {store, NULL};
+			token = strtok(store, " ");
+			while (token != NULL)
+			{
+				args[i++] = token;
+				token = strtok(NULL, " ");
+			}
+			args[i] = NULL;
+
 			exeRV = execve(args[0], args, NULL);
 			if (exeRV == -1)
 			{
+				printf("ERROR");
 				perror("Error ");
 				exit(EXIT_FAILURE);
 			}

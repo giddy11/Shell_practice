@@ -4,22 +4,20 @@
  * main - reads user input and print
  * Return: 0
  */
+
 int main(void)
 {
-	char *prompt, *lines_buffer, *lines_read, **argv;
-	size_t line_len;
-	ssize_t line_size;
-	const char *delim;
-	int argc, i, status;
+	char *prompt = "Prompt$ ";
+	size_t line_len = 0;
+	char *lines_buffer = NULL;
+	ssize_t line_size = 0;
+	char *lines_read;
+	const char *delim = " \n";
+	char **argv;
+	int argc = 0, i = 0;
+
 	pid_t child;
-
-	prompt = "Prompt$ ";
-	lines_buffer = NULL;
-	line_len = 0;
-	line_size = 0;
-	delim = " \n";
-	argc = i = 0;
-
+	int status;
 	while (1)
 	{
 		printf("%s", prompt);

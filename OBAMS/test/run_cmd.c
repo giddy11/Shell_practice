@@ -2,12 +2,12 @@
 
 char *build_full_path(const char *directory, const char *cmd)
 {
-	int cmd_len, dir_len;
+	int cmd_len, dir_len
 	char *full_path;
 
 	cmd_len = strlen(cmd);
 	dir_len = strlen(directory);
-	full_path = malloc(cmd_len + dir_len + 2);
+	char *full_path = malloc(cmd_len + dir_len + 2);
 
 	if (!full_path)
 		return (NULL);

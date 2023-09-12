@@ -1,9 +1,10 @@
 #include "shell.h"
 
-/**
+/** 
  * prompt - gets user input
  * Return: total user input
  */
+
 char *prompt(void)
 {
 	char *input = "Prompt$ ";

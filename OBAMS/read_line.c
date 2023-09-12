@@ -1,41 +1,32 @@
 #include "shell.h"
 
-/**
- * main - reads user input and print
- * Return: 0
- */
-int main(void)
-{
-	char *prompt, *lines_buffer, *lines_read, **argv;
-	size_t line_len;
-	ssize_t line_size;
-	const char *delim;
-	int argc, i, status;
-	pid_t child;
+void getInput(char **lines_buffer, size_t *line_len, const char *prompt) {
+    ssize_t line_size;
 
-	prompt = "Prompt$ ";
-	lines_buffer = NULL;
-	line_len = 0;
-	line_size = 0;
-	delim = " \n";
-	argc = i = 0;
+    printf("%s", prompt);
+    line_size = getline(lines_buffer, line_len, stdin);
+    if (line_size == -1) {
+        perror("\nExit getline...");
+        exit(EXIT_FAILURE); // Exit the program if getline fails.
+    }
+}
 
-	while (1)
-	{
-		printf("%s", prompt);
-		line_size = getline(&lines_buffer, &line_len, stdin);
-		/*check if getline return -1 or EOF*/
-		if (line_size == -1)
-		{
-			perror("\nExit getline...");
-			return (-1);
-		}
-		/*allocate space for lines read*/
-		lines_read = strdup(lines_buffer);
-		if (lines_read == NULL)
-			return (-1);
+int main(void) {
+    char *prompt = "Prompt$ ";
+    char *lines_buffer = NULL;
+    size_t line_len = 0;
+    const char *delim = " \n";
+    int argc, i, status;
+    pid_t child;
+	char **argv;
 
-		argv = split_str(lines_read, delim);
+    argc = i = 0;
+
+    while (1) {
+        getInput(&lines_buffer, &line_len, prompt);
+
+        // Rest of your code for splitting and executing commands...
+	argv = split_str(lines_buffer, delim);
 		if (argv == NULL)
 			return (-1);
 
@@ -54,17 +45,11 @@ int main(void)
 		{
 			wait(&status);
 		}
-	}
-	/*free the allocated space*/
-	free(lines_buffer);
-	free(lines_read);
-	i = 0;
-	while (argv[i] != NULL)
-	{
-		free(argv[i]);
-		i++;
-	}
-	free(argv);
+    }
 
-	return (0);
+    // Free allocated memory and perform cleanup as needed.
+    free(lines_buffer);
+
+    return 0;
 }
+

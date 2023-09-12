@@ -1,0 +1,5 @@
+Getline --- Read INPUT from stdin
+strtok ---- split commands (array of strings)
+STAT ------- to find executables
+ADD PATH ---- to find exe
+IF STAT? --- EXECVE
